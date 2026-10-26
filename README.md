@@ -74,17 +74,3 @@ The `genomewide_iep_prediction/submit_genomewide_iep_prediction.pbs.example`
 file is an optional PBS template. Scheduler allocation, storage and environment
 activation are intentionally left to the user.
 
-## Reproducibility notes
-
-- Random seeds and analytical thresholds remain explicit in the scripts.
-- SVM training tables and the target-panel BED used by the long-read workflow are included as analysis resources. Confirm that these resource files may be redistributed under the repository's chosen licence before public release.
-- The reference genome is intentionally not bundled. Record its release and checksum in the repository release notes.
-- Generated outputs, scheduler logs, caches and large sequence files are excluded through `.gitignore`.
-
-## Before depositing a release
-
-1. Add the repository licence agreed by all contributors.
-2. Add the manuscript citation and permanent archive DOI when available.
-3. Record tested software versions and input-data accession or release identifiers.
-4. Confirm redistribution permission for the two SVM training tables and target-panel BED.
-5. Verify that threshold values and reference releases match the final Methods.
