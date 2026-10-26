@@ -20,23 +20,6 @@ must also be installed for the residue-level model. Genomic workflows require
 the command-line programs named in their README files or dependency checks. R
 package requirements are declared near the beginning of each R script.
 
-## PURF residue-level analysis
-
-Run locally or within an allocated compute job:
-
-```bash
-bash genomewide_iep_prediction/run_genomewide_iep_prediction.sh \
-  --features data/residue_features.tsv \
-  --training-sites data/training_sites.tsv \
-  --vcf data/annotated_snps.vcf.gz \
-  --outdir results/genomewide_iep_prediction \
-  --threads 4
-```
-
-The `genomewide_iep_prediction/submit_genomewide_iep_prediction.pbs.example`
-file is an optional PBS template. Scheduler allocation, storage and environment
-activation are intentionally left to the user.
-
 ## Candidate immune-escape analysis
 
 `candidate_iep_inference/infer_candidate_ieps_bayesian.R` is a sourceable R module. It constructs all eligible
@@ -69,6 +52,27 @@ candidate-IEP summaries, collapses sequence haplotypes by their IEP-site
 profiles and writes plotting, flow and diagnostic tables. The required
 arguments and a generic command are documented in the script header; all input
 paths are supplied at run time.
+
+## PURF residue-level analysis
+
+Run locally or within an allocated compute job:
+
+```bash
+bash genomewide_iep_prediction/run_genomewide_iep_prediction.sh \
+  --features data/residue_features.tsv \
+  --training-sites data/training_sites.tsv \
+  --vcf data/annotated_snps.vcf.gz \
+  --outdir results/genomewide_iep_prediction \
+  --threads 4
+```
+
+The training and analysis-ready input datasets used for this workflow are
+available from the authors upon reasonable request, subject to the applicable
+source-data access terms.
+
+The `genomewide_iep_prediction/submit_genomewide_iep_prediction.pbs.example`
+file is an optional PBS template. Scheduler allocation, storage and environment
+activation are intentionally left to the user.
 
 ## Reproducibility notes
 
