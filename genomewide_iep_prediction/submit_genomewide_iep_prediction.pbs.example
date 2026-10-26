@@ -1,0 +1,29 @@
+#!/usr/bin/env bash
+#PBS -q normal
+#PBS -l walltime=48:00:00
+#PBS -l mem=100GB
+#PBS -l ncpus=4
+#PBS -l jobfs=50GB
+#PBS -N purf_site_model
+#PBS -j oe
+
+set -euo pipefail
+
+# Supply allocation and storage settings with qsub, for example:
+# qsub -P PROJECT -l storage=gdata/PROJECT submit_genomewide_iep_prediction.pbs.example
+# Activate an environment containing Python, purf, pandas, scikit-learn and bcftools here.
+
+REPOSITORY_DIR="${REPOSITORY_DIR:?Set REPOSITORY_DIR to the cloned repository}"
+FEATURES="${FEATURES:?Set FEATURES to the residue-feature TSV}"
+TRAINING_SITES="${TRAINING_SITES:?Set TRAINING_SITES to the training-site TSV}"
+VCF="${VCF:?Set VCF to the annotated SNP VCF}"
+OUTDIR="${OUTDIR:?Set OUTDIR to the output directory}"
+
+export TMPDIR="${PBS_JOBFS:-${TMPDIR:-${OUTDIR}/tmp}}"
+
+bash "${REPOSITORY_DIR}/genomewide_iep_prediction/run_genomewide_iep_prediction.sh" \
+  --features "$FEATURES" \
+  --training-sites "$TRAINING_SITES" \
+  --vcf "$VCF" \
+  --outdir "$OUTDIR" \
+  --threads "${PBS_NCPUS:-4}"

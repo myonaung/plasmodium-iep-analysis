@@ -1,0 +1,9 @@
+name: sm-sniper-macos
+channels:
+  - conda-forge
+  - bioconda
+  - defaults
+dependencies:
+  - python>=3.10
+  - snakemake>=7
+  - pyyaml

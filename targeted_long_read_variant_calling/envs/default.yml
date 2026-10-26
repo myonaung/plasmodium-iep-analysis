@@ -1,0 +1,22 @@
+name: sm-sniper
+channels:
+  - conda-forge
+  - bioconda
+  - defaults
+dependencies:
+  - python>=3.8,<3.11
+  - snakemake>=7
+  - minimap2
+  - samtools
+  - bcftools
+  - bedtools
+  - vcftools
+  - longshot
+  - whatshap
+  - htslib
+  - r-base
+  - r-readr
+  - r-tidyr
+  - r-tidyverse
+  - r-e1071
+  - r-tibble
