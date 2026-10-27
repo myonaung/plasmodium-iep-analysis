@@ -18,8 +18,7 @@ escape reveal antigenic redundancy within Plasmodium sequence diversity**.
 | [`targeted_long_read_variant_calling/`](targeted_long_read_variant_calling/) | Targeted Nanopore SNV calling and caller-specific SVM filtering |
 | [`wgs_short_read_variant_calling/`](wgs_short_read_variant_calling/) | GATK whole-genome short-read variant calling |
 
-The relationship between workflows and their principal inputs and outputs is
-described in [`docs/wiki/Workflows.md`](docs/wiki/Workflows.md).
+
 
 ## Requirements
 
@@ -94,14 +93,8 @@ requirements are documented in the input-directory README.
 ## Documentation
 
 - [`SCRIPT_MANIFEST.md`](SCRIPT_MANIFEST.md): released scripts and renamed files
-- [`docs/wiki/Home.md`](docs/wiki/Home.md): wiki landing page
-- [`docs/wiki/Input-data.md`](docs/wiki/Input-data.md): input datasets and access
-- [`docs/wiki/Outputs.md`](docs/wiki/Outputs.md): principal output files
-- [`docs/wiki/GitHub-repository-settings.md`](docs/wiki/GitHub-repository-settings.md): recommended Pro settings and branch rules
 - [`CONTRIBUTING.md`](CONTRIBUTING.md): contributions and reproducibility checks
 
-The pages under `docs/wiki/` are ready to copy or push to the repository's
-GitHub Wiki. See [`docs/wiki/Publishing-the-wiki.md`](docs/wiki/Publishing-the-wiki.md).
 
 ## Reproducibility
 
