@@ -106,11 +106,6 @@ requirements are documented in the input-directory README.
 - The reference genome is not bundled. Record its provider, release and
   checksum in the archived repository release.
 
-## Citation
-
-Please cite the accompanying manuscript. Add the final journal citation and
-archive DOI here when available.
-
 ## Support
 
 Use GitHub Issues for reproducible code problems and workflow questions. Do
