@@ -11,7 +11,7 @@ escape reveal antigenic redundancy within Plasmodium sequence diversity**.
 
 | Workflow | Purpose |
 |---|---|
-| [`candidate_iep_inference/`](candidate_iep_inference/) | Bayesian mixed-effects inference of candidate IEPs from longitudinal infection pairs |
+| [`iep_inference/`](iep_inference/) | Bayesian mixed-effects inference of  IEPs from longitudinal infection pairs |
 | [`haplotype_serotype_profiles/`](haplotype_serotype_profiles/) | Haplotype reduction, serotype accumulation and random-forest position importance |
 | [`genomewide_iep_prediction/`](genomewide_iep_prediction/) | Positive-unlabelled random-forest prediction of IEP-like residues |
 | [`csp_serotype_representation/`](csp_serotype_representation/) | CSP putative-serotype calling, optional sample clustering and geographic representation |
@@ -34,9 +34,9 @@ Large MalariaGEN datasets and reference genomes are not duplicated here.
 Obtain them under the applicable source-data access terms and record the
 release and reference checksums used for each analysis.
 
-## Candidate IEP inference
+## IEP inference
 
-`candidate_iep_inference/infer_candidate_ieps_bayesian.R` constructs eligible
+`iep_inference/infer_candidate_ieps_bayesian.R` constructs eligible
 within-participant infection pairs, fits the Bayesian mixed-effects model and
 writes pair-level, model-input, posterior-summary and candidate-site outputs.
 
@@ -62,7 +62,7 @@ intended threshold explicitly when recreating manuscript outputs.
 ## Haplotype and putative-serotype profiling
 
 `haplotype_serotype_profiles/build_haplotype_serotype_profiles.R` combines
-filtered Pf7 and Pv4 antigen data with candidate-IEP summaries, collapses
+filtered Pf7 and Pv4 antigen data with IEP summaries, collapses
 sequence haplotypes by their IEP-site profiles and writes plotting, flow and
 diagnostic tables. Its required arguments and an example command are provided
 in the script header and workflow README.
