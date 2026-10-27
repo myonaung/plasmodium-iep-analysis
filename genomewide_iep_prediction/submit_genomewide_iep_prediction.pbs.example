@@ -10,13 +10,16 @@
 set -euo pipefail
 
 # Supply allocation and storage settings with qsub, for example:
-# qsub -P PROJECT -l storage=gdata/PROJECT submit_genomewide_iep_prediction.pbs.example
+# qsub -P PROJECT -l storage=gdata/PROJECT \
+#   -v REPOSITORY_DIR=/path/to/repository,OUTDIR=/path/to/results \
+#   submit_genomewide_iep_prediction.pbs.example
 # Activate an environment containing Python, purf, pandas, scikit-learn and bcftools here.
 
 REPOSITORY_DIR="${REPOSITORY_DIR:?Set REPOSITORY_DIR to the cloned repository}"
-FEATURES="${FEATURES:?Set FEATURES to the residue-feature TSV}"
-TRAINING_SITES="${TRAINING_SITES:?Set TRAINING_SITES to the training-site TSV}"
-VCF="${VCF:?Set VCF to the annotated SNP VCF}"
+INPUT_DIR="${INPUT_DIR:-${REPOSITORY_DIR}/PURF_residue_level_analysis_input}"
+FEATURES="${FEATURES:-${INPUT_DIR}/purf_residue_features.tsv}"
+TRAINING_SITES="${TRAINING_SITES:-${INPUT_DIR}/purf_training_sites.tsv}"
+VCF="${VCF:-${INPUT_DIR}/purf_annotated_ns_snps.vcf.gz}"
 OUTDIR="${OUTDIR:?Set OUTDIR to the output directory}"
 
 export TMPDIR="${PBS_JOBFS:-${TMPDIR:-${OUTDIR}/tmp}}"

@@ -1,0 +1,7 @@
+]633;E;printf "file\\tsize_bytes\\tsha256\\n";8ca7b04a-83fb-40d4-888b-d25df6de6220]633;Cfile	size_bytes	sha256
+README.txt	357	b51ec4d15525d58dd0414356db61365b04c77964ea41a8ea39ff5a9b37fd5cd8
+input_manifest.tsv	195	230e30ae202cfc7b47e47618ada286a148599401a50ac8c46575b8b9e676ec30
+purf_annotated_ns_snps.vcf.gz	510666812	56fcc31241a9416cd1ad47f454fb3949e60d26cfbd858b1238faf6f8ca08b481
+purf_annotated_ns_snps.vcf.gz.csi	14894	0ca4a8e3e533d80abec85447685655f17681efee1ed3f2624016d8c2d4d9fc89
+purf_residue_features.tsv	154226501	4fe03be29203b7aa1a6463780f8a7d5f58627cbd81bb0713a81c91a5643eee02
+purf_training_sites.tsv	1786655	58324e4212f31ba6dc3edea2798d80ab8f5af09ddb64c5b24bf4a417747161e7

@@ -12,6 +12,15 @@ Names were shortened where helpful, but analytical code was otherwise retained.
 | `targeted_long_read_variant_calling/` | Targeted Nanopore SNV calling and SVM filtering |
 | `wgs_short_read_variant_calling/` | Four-stage GATK WGS workflow |
 
+Repository support files include:
+
+| Path | Purpose |
+|---|---|
+| `PURF_residue_level_analysis_input/` | Analysis-ready inputs for the residue-level PURF workflow |
+| `docs/wiki/` | Wiki-ready workflow and reproducibility documentation |
+| `.github/` | Issue forms and pull-request template |
+| `CONTRIBUTING.md` | Contribution and validation guidance |
+
 The PURF scripts were renamed as follows:
 
 | Original name | Release name |

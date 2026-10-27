@@ -1,30 +1,44 @@
-# Analysis code
+# Plasmodium immune-escape analysis
 
-This directory contains publication-facing analysis workflows for the accompanying manuscript. Paths are supplied at run time; no institutional filesystem layout, project allocation or user-specific Conda installation is assumed.
+Publication-facing workflows for identifying candidate immune-escape
+polymorphisms (IEPs), reducing parasite haplotypes to putative serotypes and
+prioritising immune-escape-like residues across the *Plasmodium* genome.
 
-## Contents
+The repository accompanies the manuscript **Genomic signatures of immune
+escape reveal antigenic redundancy within Plasmodium sequence diversity**.
 
-- `candidate_iep_inference/`: Bayesian mixed-effects inference of candidate immune-escape polymorphisms.
-- `haplotype_serotype_profiles/`: profile construction, serotype accumulation and random-forest position importance.
-- `genomewide_iep_prediction/`: positive-unlabelled random-forest prediction of IEP-like residues.
-- `csp_serotype_representation/`: CSP putative-serotype calling, optional sample clustering, population-representation analysis and geographic maps.
-- `targeted_long_read_variant_calling/`: targeted long-read SNV calling and caller-specific SVM filtering.
-- `wgs_short_read_variant_calling/`: GATK whole-genome short-read variant calling.
+## Workflows
 
-## General requirements
+| Workflow | Purpose |
+|---|---|
+| [`candidate_iep_inference/`](candidate_iep_inference/) | Bayesian mixed-effects inference of candidate IEPs from longitudinal infection pairs |
+| [`haplotype_serotype_profiles/`](haplotype_serotype_profiles/) | Haplotype reduction, serotype accumulation and random-forest position importance |
+| [`genomewide_iep_prediction/`](genomewide_iep_prediction/) | Positive-unlabelled random-forest prediction of IEP-like residues |
+| [`csp_serotype_representation/`](csp_serotype_representation/) | CSP putative-serotype calling, optional sample clustering and geographic representation |
+| [`targeted_long_read_variant_calling/`](targeted_long_read_variant_calling/) | Targeted Nanopore SNV calling and caller-specific SVM filtering |
+| [`wgs_short_read_variant_calling/`](wgs_short_read_variant_calling/) | GATK whole-genome short-read variant calling |
 
-The scripts use command-line arguments or editable example configuration files. Large input datasets, reference genomes, VCF files and intermediate results are not included. Obtain MalariaGEN data under the applicable data-access terms and download reference genomes from the original provider.
+The relationship between workflows and their principal inputs and outputs is
+described in [`docs/wiki/Workflows.md`](docs/wiki/Workflows.md).
 
-The principal Python dependencies are listed in `requirements.txt`. PURF itself
-must also be installed for the residue-level model. Genomic workflows require
-the command-line programs named in their README files or dependency checks. R
-package requirements are declared near the beginning of each R script.
+## Requirements
 
-## Candidate immune-escape analysis
+Paths are supplied at run time; no institutional filesystem layout, scheduler
+allocation or user-specific Conda installation is assumed. The principal
+Python dependencies are listed in [`requirements.txt`](requirements.txt).
+PURF must be installed separately for the residue-level model. Genomic
+workflows also require the command-line tools named in their README files.
+R-package requirements are declared at the beginning of each R script.
 
-`candidate_iep_inference/infer_candidate_ieps_bayesian.R` is a sourceable R module. It constructs all eligible
+Large MalariaGEN datasets and reference genomes are not duplicated here.
+Obtain them under the applicable source-data access terms and record the
+release and reference checksums used for each analysis.
+
+## Candidate IEP inference
+
+`candidate_iep_inference/infer_candidate_ieps_bayesian.R` constructs eligible
 within-participant infection pairs, fits the Bayesian mixed-effects model and
-writes pairwise, model-input, posterior-summary and candidate-site outputs.
+writes pair-level, model-input, posterior-summary and candidate-site outputs.
 
 ```r
 source("candidate_iep_inference/infer_candidate_ieps_bayesian.R")
@@ -40,37 +54,72 @@ result <- allele_specific_immunity_bayesian(
 )
 ```
 
-The function default for its high-confidence export is `0.95`. The downstream
-cross-antigen classification used for the manuscript is configured explicitly
-in `haplotype_serotype_profiles/build_haplotype_serotype_profiles.R` at `0.80`; pass the intended threshold explicitly
-when recreating manuscript outputs.
+The function default for its high-confidence export is `0.95`. The manuscript
+cross-antigen classification is configured explicitly at `0.80` in
+`haplotype_serotype_profiles/build_haplotype_serotype_profiles.R`; pass the
+intended threshold explicitly when recreating manuscript outputs.
 
-## Haplotype and putative-serotype inputs
+## Haplotype and putative-serotype profiling
 
-`haplotype_serotype_profiles/build_haplotype_serotype_profiles.R` combines filtered Pf7 and Pv4 antigen data with
-candidate-IEP summaries, collapses sequence haplotypes by their IEP-site
-profiles and writes plotting, flow and diagnostic tables. The required
-arguments and a generic command are documented in the script header; all input
-paths are supplied at run time.
+`haplotype_serotype_profiles/build_haplotype_serotype_profiles.R` combines
+filtered Pf7 and Pv4 antigen data with candidate-IEP summaries, collapses
+sequence haplotypes by their IEP-site profiles and writes plotting, flow and
+diagnostic tables. Its required arguments and an example command are provided
+in the script header and workflow README.
 
 ## PURF residue-level analysis
 
-Run locally or within an allocated compute job:
+The required PURF inputs are stored in
+[`PURF_residue_level_analysis_input/`](PURF_residue_level_analysis_input/):
+
+- `purf_residue_features.tsv`
+- `purf_training_sites.tsv`
+- `purf_annotated_ns_snps.vcf.gz` and its index
+
+Run from the repository root:
 
 ```bash
 bash genomewide_iep_prediction/run_genomewide_iep_prediction.sh \
-  --features data/residue_features.tsv \
-  --training-sites data/training_sites.tsv \
-  --vcf data/annotated_snps.vcf.gz \
+  --features PURF_residue_level_analysis_input/purf_residue_features.tsv \
+  --training-sites PURF_residue_level_analysis_input/purf_training_sites.tsv \
+  --vcf PURF_residue_level_analysis_input/purf_annotated_ns_snps.vcf.gz \
   --outdir results/genomewide_iep_prediction \
   --threads 4
 ```
 
-The training and analysis-ready input datasets used for this workflow are
-available from the authors upon reasonable request, subject to the applicable
-source-data access terms.
+The PBS example uses these repository-relative inputs by default. The feature
+and training tables are analysis-ready derivatives; provenance and column
+requirements are documented in the input-directory README.
 
-The `genomewide_iep_prediction/submit_genomewide_iep_prediction.pbs.example`
-file is an optional PBS template. Scheduler allocation, storage and environment
-activation are intentionally left to the user.
+## Documentation
 
+- [`SCRIPT_MANIFEST.md`](SCRIPT_MANIFEST.md): released scripts and renamed files
+- [`docs/wiki/Home.md`](docs/wiki/Home.md): wiki landing page
+- [`docs/wiki/Input-data.md`](docs/wiki/Input-data.md): input datasets and access
+- [`docs/wiki/Outputs.md`](docs/wiki/Outputs.md): principal output files
+- [`docs/wiki/GitHub-repository-settings.md`](docs/wiki/GitHub-repository-settings.md): recommended Pro settings and branch rules
+- [`CONTRIBUTING.md`](CONTRIBUTING.md): contributions and reproducibility checks
+
+The pages under `docs/wiki/` are ready to copy or push to the repository's
+GitHub Wiki. See [`docs/wiki/Publishing-the-wiki.md`](docs/wiki/Publishing-the-wiki.md).
+
+## Reproducibility
+
+- Random seeds and analytical thresholds remain explicit in the scripts.
+- Generated results, scheduler logs, caches and large general sequence files
+  are excluded through `.gitignore`.
+- The PURF input VCF is tracked specifically through Git LFS; run
+  `git lfs install` before adding it.
+- The reference genome is not bundled. Record its provider, release and
+  checksum in the archived repository release.
+
+## Citation
+
+Please cite the accompanying manuscript. Add the final journal citation and
+archive DOI here when available.
+
+## Support
+
+Use GitHub Issues for reproducible code problems and workflow questions. Do
+not post controlled-access data, participant information or credentials in an
+issue.

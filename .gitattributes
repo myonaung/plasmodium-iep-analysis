@@ -1,2 +1,5 @@
 # Auto detect text files and perform LF normalization
 * text=auto
+PURF_residue_level_analysis_input/purf_annotated_ns_snps.vcf.gz filter=lfs diff=lfs merge=lfs -text
+PURF_residue_level_analysis_input/purf_annotated_ns_snps.vcf.gz.csi filter=lfs diff=lfs merge=lfs -text
+PURF_residue_level_analysis_input/purf_residue_features.tsv filter=lfs diff=lfs merge=lfs -text

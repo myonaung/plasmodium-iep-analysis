@@ -4,6 +4,9 @@ The workflow trains a positive-unlabelled random forest on known candidate IEP s
 
 ## Inputs
 
+The manuscript inputs are provided in
+[`../PURF_residue_level_analysis_input/`](../PURF_residue_level_analysis_input/).
+
 - **Residue-feature TSV:** one nonsynonymous residue per row with gene ID,
   amino-acid position and numeric immunological, structural or
   population-genetic predictors.
@@ -16,9 +19,9 @@ The workflow trains a positive-unlabelled random forest on known candidate IEP s
 
 ```bash
 bash run_genomewide_iep_prediction.sh \
-  --features data/residue_features.tsv \
-  --training-sites data/candidate_iep_training_sites.tsv \
-  --vcf data/annotated_snps.vcf.gz \
+  --features ../PURF_residue_level_analysis_input/purf_residue_features.tsv \
+  --training-sites ../PURF_residue_level_analysis_input/purf_training_sites.tsv \
+  --vcf ../PURF_residue_level_analysis_input/purf_annotated_ns_snps.vcf.gz \
   --outdir results/genomewide_iep_prediction \
   --threads 4
 ```
@@ -27,4 +30,15 @@ bash run_genomewide_iep_prediction.sh \
 
 Required Python packages include NumPy, pandas, scikit-learn and the package providing `purf.pu_ensemble.PURandomForestClassifier`. `bcftools` is required to link residue scores to SnpEff `ANN` annotations.
 
-The PBS file is an example submission wrapper only. Set scheduler allocation options at submission time and pass `REPOSITORY_DIR`, `FEATURES`, `TRAINING_SITES`, `VCF` and `OUTDIR` as environment variables.
+The PBS file is an example submission wrapper only. Set scheduler allocation
+options at submission time and pass `REPOSITORY_DIR` and `OUTDIR` as
+environment variables.
+
+`FEATURES`, `TRAINING_SITES` and `VCF` default to the corresponding files in
+`PURF_residue_level_analysis_input/` when using the PBS template. They can be
+overridden with environment variables for an external data location.
+
+The compressed VCF is stored using Git LFS. After cloning, run `git lfs pull`
+before starting this workflow and verify the files against
+`PURF_residue_level_analysis_input/input_manifest.tsv` when a manifest is
+provided.
