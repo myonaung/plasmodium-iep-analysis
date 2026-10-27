@@ -99,12 +99,6 @@ requirements are documented in the input-directory README.
 ## Reproducibility
 
 - Random seeds and analytical thresholds remain explicit in the scripts.
-- Generated results, scheduler logs, caches and large general sequence files
-  are excluded through `.gitignore`.
-- The PURF input VCF is tracked specifically through Git LFS; run
-  `git lfs install` before adding it.
-- The reference genome is not bundled. Record its provider, release and
-  checksum in the archived repository release.
 
 ## Support
 
